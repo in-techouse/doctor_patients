@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:doctor_app/view/auth/Login_Screen.dart';
 import 'package:doctor_app/view/patient_ui/Patient_DashBoard.dart';
 import 'package:doctor_app/view/utilis/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScren extends StatefulWidget {
   SplashScren({Key key}) : super(key: key);
@@ -17,9 +19,9 @@ class _SplashScrenState extends State<SplashScren> {
     // TODO: implement initState
     super.initState();
     Timer(
-        Duration(seconds: 3),
+        Duration(seconds: 4),
         () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => PatientDashBoard())));
+            builder: (BuildContext context) => LoginScreen())));
   }
 
   @override
@@ -28,7 +30,11 @@ class _SplashScrenState extends State<SplashScren> {
       backgroundColor: main_color,
       body: SafeArea(
         child: Center(
-          child: Text("Splash Screen"),
+          child: Text("Patient Care",
+              style: GoogleFonts.aclonica(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 28)),
         ),
       ),
     );
