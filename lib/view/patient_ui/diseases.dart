@@ -1,3 +1,4 @@
+import 'package:doctor_app/view/patient_ui/diseaseQuestions.dart';
 import 'package:doctor_app/view/utilis/widgets/bottomNavBar.dart';
 import 'package:flutter/material.dart';
 
@@ -22,9 +23,17 @@ class _DiseasesState extends State<Diseases> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              DiseasesCard(txt: 'Cold Flu',),
-              DiseasesCard(txt: 'Allergies',),
-              DiseasesCard(txt: 'Cardio Vascular',),
+              GestureDetector ( onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DiseaseQuestions(disease: 'Cold Flu',)));
+              },child: DiseasesCard(txt: 'Cold Flu',)),
+              GestureDetector(onTap: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => DiseaseQuestions(disease: 'Allergies',)));
+              },child: DiseasesCard(txt: 'Allergies',)),
+              GestureDetector(onTap:(){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> DiseaseQuestions(disease: 'Cardio Vascular',)));
+              },child: DiseasesCard(txt: 'Cardio Vascular',)),
               DiseasesCard(txt: 'HairFall',),
               DiseasesCard(txt: 'Diabetics',),
               DiseasesCard(txt: 'Headache',),
@@ -53,7 +62,7 @@ class DiseasesCard extends StatelessWidget {
         width: width,
           height: 50,
           padding: const EdgeInsets.only(top: 10,bottom: 10,left: 10),
-          child: Text(txt)),
+          child: GestureDetector(child: Text(txt))),
     );
   }
 }

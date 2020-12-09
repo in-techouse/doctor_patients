@@ -1,6 +1,9 @@
+import 'package:doctor_app/view/patient_ui/Patient_DashBoard.dart';
 import 'package:doctor_app/view/utilis/button.dart';
+import 'package:doctor_app/view/utilis/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 import 'Login_Screen.dart';
 
@@ -31,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               color: Color(0xff1e319d),
             ),
             Positioned(
-              top: 100,
+              top: 80,
               left: 95,
               child: Text("Patient Care",
                   style: GoogleFonts.aclonica(
@@ -40,11 +43,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       fontSize: 23)),
             ),
             Positioned(
-              top: 170,
-              left: 30,
+              top: 150,
+              left: 20,
               child: Container(
-                width: 300,
-                height: 370,
+                width: 320,
+                height: 400,
                 child: Card(
                   elevation: 5,
                   shape: RoundedRectangleBorder(
@@ -52,9 +55,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   child: Padding(
                     padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     child: Column(
+
                       children: [
+                        ToggleSwitch(
+                          minWidth: 90.0,
+                          initialLabelIndex: 0,
+                          activeBgColor: Color(0xff5d8307),
+                          activeFgColor: Colors.white,
+                          inactiveBgColor: Color(0xffeceded),
+                          inactiveFgColor: Colors.grey[900],
+                          labels: ['Doctor', 'Patient',],
+                          onToggle: (index) {
+                            print('switched to: $index');
+                          },
+                        ),
+                        SizedBox(
+                          height: 13,
+                        ),
                         TextFormField(
                             decoration: new InputDecoration(
                                 hintText: "Name",
@@ -109,21 +128,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
             Positioned(
-              top: 508,
+              top: 509,
               left: 90,
-              child: SignButton(
-                  screen: screen,
-                  width: screen ? width * 0.5 : height * 0.1,
-                  height: screen ? width * 0.14 : height * 0.1,
-                  txt: "SIGN UP",
-                  txtColor: Colors.white,
-                  buttonColor: Color(0xff1e319d),
-                  borderColor: Colors.transparent,
-                  onPressed: () {
-                    // Navigator.push(context,
-                    //     MaterialPageRoute(builder: (context) => HomeScreen()));
-                    // Signin(context);
-                  }),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SignButton(
+                    screen: screen,
+                    width: screen ? width * 0.5 : height * 0.1,
+                    height: screen ? width * 0.14 : height * 0.1,
+                    txt: "SIGN UP",
+                    txtColor: Colors.white,
+                    buttonColor: Color(0xff1e319d),
+                    borderColor: Colors.transparent,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => PatientDashBoard()));
+                      // Signin(context);
+                    }),
+              ),
             ),
             Positioned(
               top: 600,
