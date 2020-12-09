@@ -1,4 +1,6 @@
 import 'package:doctor_app/view/Splash_Screen.dart';
+import 'package:doctor_app/view/patient_ui/Patient_DashBoard.dart';
+import 'package:doctor_app/view/patient_ui/diseases.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +18,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SplashScren(),
+      home: PatientDashBoard(),
     );
   }
 }

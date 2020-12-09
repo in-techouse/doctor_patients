@@ -1,3 +1,4 @@
+import 'package:doctor_app/view/utilis/widgets/bottomNavBar.dart';
 import 'package:flutter/material.dart';
 
 class PatientDashBoard extends StatefulWidget {
@@ -11,10 +12,10 @@ class _PatientDashBoardState extends State<PatientDashBoard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: NavBar(),
       body: SafeArea(
-          child: Center(
-        child: Text("DashBoard"),
-      )),
+
+      ),
     );
   }
 }
