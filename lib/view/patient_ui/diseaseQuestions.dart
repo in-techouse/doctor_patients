@@ -135,6 +135,26 @@ class _DiseaseQuestionsState extends State<DiseaseQuestions> {
         _questions = Questions.CARDIO_VASCULAR_QUESTIONS;
       });
     }
+    else if (widget.disease == "HairFall") {
+      setState(() {
+        _questions = Questions.HAIR_FALL;
+      });
+    }
+    else if (widget.disease == "Diabetics") {
+      setState(() {
+        _questions = Questions.DIABETICS;
+      });
+    }
+    else if (widget.disease == "Headache") {
+      setState(() {
+        _questions = Questions.HEADACHE;
+      });
+    }
+    else if (widget.disease == "Stomachache") {
+      setState(() {
+        _questions = Questions.STOMACHACHE;
+      });
+    }
   }
 
   void _resetQuiz() {
@@ -163,38 +183,40 @@ class _DiseaseQuestionsState extends State<DiseaseQuestions> {
     return Scaffold(
       backgroundColor: main_color,
       body: SafeArea(
-        child: Column(
+        child: SingleChildScrollView(
+          child: Column(
 
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: 60,),
-            Text("Monitoring you health",style: GoogleFonts.aclonica(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 24)),
-            SizedBox(height: 70,),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: Container(
-                child: Card(
-                  elevation: 7,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
-                    child: _questionIndex < _questions.length
-                        ? Quiz(
-                            answerQuestion: _answerQuestion,
-                            questionIndex: _questionIndex,
-                            questions: _questions,
-                          ) //Quiz
-                        : Result(_totalScore, _resetQuiz),
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: 60,),
+              Text("Monitoring you health",style: GoogleFonts.aclonica(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 24)),
+              SizedBox(height: 70,),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Container(
+                  child: Card(
+                    elevation: 7,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
+                      child: _questionIndex < _questions.length
+                          ? Quiz(
+                              answerQuestion: _answerQuestion,
+                              questionIndex: _questionIndex,
+                              questions: _questions,
+                            ) //Quiz
+                          : Result(_totalScore, _resetQuiz),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
