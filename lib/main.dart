@@ -1,9 +1,12 @@
 import 'package:doctor_app/view/Splash_Screen.dart';
 import 'package:doctor_app/view/patient_ui/Patient_DashBoard.dart';
 import 'package:doctor_app/view/patient_ui/diseases.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
