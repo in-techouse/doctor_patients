@@ -1,3 +1,4 @@
+import 'package:doctor_app/doctor_ui/doctorsList.dart';
 import 'package:doctor_app/model/Questions.dart';
 import 'package:doctor_app/view/utilis/colors.dart';
 import 'package:flutter/material.dart';
@@ -292,28 +293,36 @@ class Answer extends StatelessWidget {
 class Result extends StatelessWidget {
   final int resultScore;
   final Function resetHandler;
+  bool score = false;
 
   Result(this.resultScore, this.resetHandler);
 
   //Remark Logic
   String get resultPhrase {
     String resultText;
-    if (resultScore >= 41) {
+    String doctorText;
+    if (resultScore >= 31) {
       resultText = 'Please Consult with your doctor.';
-      print(resultScore);
-    } else if (resultScore >= 31) {
-      resultText = 'Please Consult with your doctor.';
+      // show me doctors
       print(resultScore);
     } else if (resultScore >= 21) {
       resultText = 'Prescription here.';
-    } else if (resultScore >= 1) {
-      resultText = 'You have minnor symptoms.Take care of yourself.';
-    } else {
-      resultText = 'You have no flu or cold.';
-      print(resultScore);
+    } else  {
+      resultText = 'You have minor symptoms.Take care of yourself.';
     }
     return resultText;
   }
+
+  // String get resultDoctor {
+  //   String doctorText;
+  //   if (resultScore >= 31) {
+  //     doctorText = 'Doctors list';
+  //     print(resultScore);
+  //   } else {
+  //    SizedBox();
+  //   }
+  //   return doctorText;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +334,29 @@ class Result extends StatelessWidget {
             resultPhrase,
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
-          ), //Tex//Text
+          ),
+          resultPhrase == "Please Consult with your doctor." ?
+          GestureDetector(
+            onTap: (){
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => DoctorList()));
+            },
+            child: Container(
+              margin: const EdgeInsets.only(top: 20),
+              height: 40,
+                width: 130,
+                decoration: BoxDecoration(
+                  color: main_color,
+                  borderRadius: BorderRadius.circular(15)
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text("See Doctors",style: TextStyle(color: Colors.white,fontSize: 16),),
+                Icon(Icons.arrow_forward_outlined,color: Colors.white,)
+              ],
+            )),
+          ) : SizedBox(),
           FlatButton(
             child: Text(
               'Back to diseases',

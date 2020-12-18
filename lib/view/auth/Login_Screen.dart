@@ -1,3 +1,7 @@
+import 'package:doctor_app/director/Director.dart';
+import 'package:doctor_app/doctor_ui/doctorChat.dart';
+import 'package:doctor_app/model/constants.dart';
+import 'package:doctor_app/model/users.dart';
 import 'package:doctor_app/view/auth/Signup_Screen.dart';
 import 'package:doctor_app/view/patient_ui/Patient_DashBoard.dart';
 import 'package:doctor_app/view/patient_ui/chats.dart';
@@ -5,8 +9,10 @@ import 'package:doctor_app/view/utilis/button.dart';
 import 'package:doctor_app/view/utilis/colors.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   LoginScreen({Key key}) : super(key: key);
@@ -17,9 +23,59 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool showPas = false;
-  String _email, _password;
+  String valueEmail, valuePassword;
   GlobalKey<FormState> loginKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
+  bool isWorking = false;
+  String errorMessage = '';
+
+  loginUser() {
+    print("loginUser");
+    FocusScope.of(context).requestFocus(FocusNode());
+    errorMessage = "";
+    FirebaseAuth auth = FirebaseAuth.instance;
+    auth
+        .signInWithEmailAndPassword(email: valueEmail, password: valuePassword)
+        .then((value) {
+      print("Auth success");
+      String id = valueEmail.replaceAll("@", "-");
+      id = id.replaceAll(".", "_");
+      DatabaseReference reference =
+          FirebaseDatabase.instance.reference().child(Constants.USERS);
+      reference.child(id).once().then((userData) async {
+        Userss user = Userss.fromJSON(userData.value);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString(Constants.NAME, user.username);
+        prefs.setInt(Constants.ROLE, user.role);
+        prefs.setString(Constants.EMAIL, user.email);
+        prefs.setString(Constants.ID, user.id);
+        setState(() {
+          isWorking = false;
+        });
+        if (user.role == 0)
+          Navigator.pushReplacement(context,
+              new MaterialPageRoute(builder: (context) => DoctorChat()));
+        else
+          Navigator.pushReplacement(context,
+              new MaterialPageRoute(builder: (context) => PatientDashBoard()));
+      }).catchError((var err) {
+        print("Database error: ${err}");
+        setState(() {
+          isWorking = false;
+        });
+        errorMessage = 'Something went wrong.\nPlease try again later.';
+        Director.showError(context, err);
+      });
+    }).catchError((var error) {
+      print("Auth error: ${error.message}");
+      print("Error");
+      print(error);
+      setState(() {
+        isWorking = false;
+      });
+      Director.showError(context, error.message);
+      errorMessage = error.message;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           TextFormField(
                               onChanged: (value) {
-                                _email = value;
+                                valueEmail = value;
                               },
                               validator: (val) {
                                 if (val.isEmpty) {
@@ -91,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           TextFormField(
                               onChanged: (value) {
-                                _password = value;
+                                valuePassword = value;
                               },
                               validator: (value) {
                                 if (value == null || value.length < 6) {
@@ -125,9 +181,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 buttonColor: Color(0xff1e319d),
                 borderColor: Colors.transparent,
                 onPressed: () {
-                  // Navigator.push(context,
-                  //     MaterialPageRoute(builder: (context) => HomeScreen()));
-                  // Signin(context);
+                  if (loginKey.currentState.validate()) {
+                    print("button clicked");
+                    setState(() {
+                      isWorking = true;
+                    });
+                    loginUser();
+                  }
                 }),
           ),
           Positioned(
@@ -144,33 +204,40 @@ class _LoginScreenState extends State<LoginScreen> {
                   GestureDetector(
                     onTap: () async {
                       if (loginKey.currentState.validate()) {
-                        try {
-                          if (type == 0) {
-                            final doctorResult =
-                                await _auth.signInWithEmailAndPassword(
-                                    email: _email, password: _password);
-                            if (doctorResult != null) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Chats()));
-                            }
-                          } else {
-                            final patientResult =
-                                await _auth.signInWithEmailAndPassword(
-                                    email: _email, password: _password);
-                            if (patientResult != null) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          PatientDashBoard()));
-                            }
-                          }
-                        } catch (e) {
-                          print(e);
-                        }
+                        print("button clicked");
+                        setState(() {
+                          isWorking = true;
+                        });
+                        loginUser();
                       }
+                      // if (loginKey.currentState.validate()) {
+                      //   try {
+                      //     if (type == 0) {
+                      //       final doctorResult =
+                      //           await _auth.signInWithEmailAndPassword(
+                      //               email: _email, password: _password);
+                      //       if (doctorResult != null) {
+                      //         Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) => ChatScreen()));
+                      //       }
+                      //     } else {
+                      //       final patientResult =
+                      //           await _auth.signInWithEmailAndPassword(
+                      //               email: _email, password: _password);
+                      //       if (patientResult != null) {
+                      //         Navigator.push(
+                      //             context,
+                      //             MaterialPageRoute(
+                      //                 builder: (context) =>
+                      //                     PatientDashBoard()));
+                      //       }
+                      //     }
+                      //   } catch (e) {
+                      //     print(e);
+                      //   }
+                      // }
                       Navigator.push(
                           context,
                           MaterialPageRoute(

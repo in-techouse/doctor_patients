@@ -24,7 +24,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   int type = 0;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
-  var role;
   bool isWorking = false;
   String errorMessage = "";
 
@@ -90,7 +89,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           isWorking = false;
         });
         Navigator.pushReplacement(context,
-            new MaterialPageRoute(builder: (context) => PatientDashBoard()));
+            new MaterialPageRoute(builder: (context) => LoginScreen()));
       }).catchError((var er) {
         setState(() {
           isWorking = false;
@@ -121,11 +120,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: [],
           ),
           Container(
-            height: 280,
+            height: height * 0.3,
             color: Color(0xff1e319d),
           ),
           Positioned(
-            top: 60,
+            top: 30,
             left: 95,
             child: Text("Patient Care",
                 style: GoogleFonts.aclonica(
@@ -133,12 +132,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     fontWeight: FontWeight.bold,
                     fontSize: 23)),
           ),
-          Positioned(
-            top: 110,
-            left: 20,
+          SingleChildScrollView(
             child: Container(
-              width: 320,
-              height: 400,
+              margin: EdgeInsets.only(left : width*0.1,top: height*0.1),
+              width: width * 0.8,
+              height: height*0.7,
               child: Card(
                 elevation: 5,
                 shape: RoundedRectangleBorder(
@@ -153,7 +151,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         ToggleSwitch(
                           minWidth: 90.0,
-                          initialLabelIndex: 0,
                           activeBgColor: Color(0xff5d8307),
                           activeFgColor: Colors.white,
                           inactiveBgColor: Color(0xffeceded),
@@ -272,8 +269,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           Positioned(
-            top: 470,
-            left: 80,
+            top: height*0.74,
+            left: width * 0.23,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: SignButton(
@@ -327,8 +324,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           Positioned(
-            top: 570,
-            left: 80,
+            top: height * 0.88,
+            left: width * 0.3,
             child: Row(
               children: [
                 Text(

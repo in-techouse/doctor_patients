@@ -1,9 +1,13 @@
 import 'package:doctor_app/view/patient_ui/Patient_DashBoard.dart';
+import 'package:doctor_app/view/patient_ui/chat/chat.dart';
 import 'package:doctor_app/view/patient_ui/chats.dart';
 import 'package:doctor_app/view/patient_ui/diseases.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar_theme.dart';
 import 'package:flutter/material.dart';
+
+import 'patientChat.dart';
+import 'chatScreen.dart';
 
 class NavBar extends StatefulWidget {
   @override
@@ -18,7 +22,7 @@ class _NavBarState extends State<NavBar> {
       return Diseases();
     }
     if (selectedIndex == 1 ) {
-      return Chats();
+      return ChatDetail();
     }
     return PatientDashBoard();
   }
