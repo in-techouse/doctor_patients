@@ -5,9 +5,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 10,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -5},
       ],
     },
     {
@@ -15,9 +15,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 5,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -2},
       ],
     },
     {
@@ -25,9 +25,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 10,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -2},
       ],
     },
     {
@@ -35,9 +35,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 10,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -2},
       ],
     },
     {
@@ -45,9 +45,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 10,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -2},
       ],
     },
     {
@@ -55,9 +55,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 10,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -2},
       ],
     },
     {
@@ -65,9 +65,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 10,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -2},
       ],
     },
     {
@@ -75,9 +75,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 10,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -2},
       ],
     },
     {
@@ -85,9 +85,9 @@ class Questions {
       'answers': [
         {
           'text': 'Yes',
-          'score': -2,
+          'score': 10,
         },
-        {'text': 'No', 'score': 10},
+        {'text': 'No', 'score': -2},
       ],
     },
   ];
