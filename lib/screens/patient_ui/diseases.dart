@@ -1,5 +1,4 @@
-import 'package:doctor_app/view/patient_ui/diseaseQuestions.dart';
-import 'package:doctor_app/view/utilis/widgets/bottomNavBar.dart';
+import 'package:doctor_app/screens/patient_ui/diseaseQuestions.dart';
 import 'package:flutter/material.dart';
 
 class Diseases extends StatefulWidget {

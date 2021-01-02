@@ -1,6 +1,6 @@
-import 'package:doctor_app/doctor_ui/doctorsList.dart';
 import 'package:doctor_app/model/Questions.dart';
-import 'package:doctor_app/view/utilis/colors.dart';
+import 'package:doctor_app/screens/doctor_ui/doctorsList.dart';
+import 'package:doctor_app/utilis/HelloDocColors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -130,28 +130,23 @@ class _DiseaseQuestionsState extends State<DiseaseQuestions> {
       setState(() {
         _questions = Questions.ALLERGIES_QUESTIONS;
       });
-    }
-    else if (widget.disease == "Cardio Vascular") {
+    } else if (widget.disease == "Cardio Vascular") {
       setState(() {
         _questions = Questions.CARDIO_VASCULAR_QUESTIONS;
       });
-    }
-    else if (widget.disease == "HairFall") {
+    } else if (widget.disease == "HairFall") {
       setState(() {
         _questions = Questions.HAIR_FALL;
       });
-    }
-    else if (widget.disease == "Diabetics") {
+    } else if (widget.disease == "Diabetics") {
       setState(() {
         _questions = Questions.DIABETICS;
       });
-    }
-    else if (widget.disease == "Headache") {
+    } else if (widget.disease == "Headache") {
       setState(() {
         _questions = Questions.HEADACHE;
       });
-    }
-    else if (widget.disease == "Stomachache") {
+    } else if (widget.disease == "Stomachache") {
       setState(() {
         _questions = Questions.STOMACHACHE;
       });
@@ -186,15 +181,19 @@ class _DiseaseQuestionsState extends State<DiseaseQuestions> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 60,),
-              Text("Monitoring you health",style: GoogleFonts.aclonica(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24)),
-              SizedBox(height: 70,),
+              SizedBox(
+                height: 60,
+              ),
+              Text("Monitoring you health",
+                  style: GoogleFonts.aclonica(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24)),
+              SizedBox(
+                height: 70,
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Container(
@@ -204,7 +203,8 @@ class _DiseaseQuestionsState extends State<DiseaseQuestions> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 15),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15, horizontal: 15),
                       child: _questionIndex < _questions.length
                           ? Quiz(
                               answerQuestion: _answerQuestion,
@@ -307,7 +307,7 @@ class Result extends StatelessWidget {
       print(resultScore);
     } else if (resultScore >= 21) {
       resultText = 'Prescription here.';
-    } else  {
+    } else {
       resultText = 'You have minor symptoms.Take care of yourself.';
     }
     return resultText;
@@ -335,28 +335,34 @@ class Result extends StatelessWidget {
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
-          resultPhrase == "Please Consult with your doctor." ?
-          GestureDetector(
-            onTap: (){
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => DoctorList()));
-            },
-            child: Container(
-              margin: const EdgeInsets.only(top: 20),
-              height: 40,
-                width: 130,
-                decoration: BoxDecoration(
-                  color: main_color,
-                  borderRadius: BorderRadius.circular(15)
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text("See Doctors",style: TextStyle(color: Colors.white,fontSize: 16),),
-                Icon(Icons.arrow_forward_outlined,color: Colors.white,)
-              ],
-            )),
-          ) : SizedBox(),
+          resultPhrase == "Please Consult with your doctor."
+              ? GestureDetector(
+                  onTap: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => DoctorList()));
+                  },
+                  child: Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      height: 40,
+                      width: 130,
+                      decoration: BoxDecoration(
+                          color: main_color,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            "See Doctors",
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                          Icon(
+                            Icons.arrow_forward_outlined,
+                            color: Colors.white,
+                          )
+                        ],
+                      )),
+                )
+              : SizedBox(),
           FlatButton(
             child: Text(
               'Back to diseases',

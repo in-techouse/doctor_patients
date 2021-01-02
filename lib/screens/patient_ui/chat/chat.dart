@@ -1,8 +1,8 @@
 // import 'dart:io';
 // import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:doctor_app/model/constants.dart';
+// import 'package:doctor_app/model/Constants.dart';
 // import 'package:doctor_app/services/database.dart';
-// import 'package:doctor_app/view/utilis/colors.dart';
+// import 'package:doctor_app/view/utilis/HelloDocColors.dart';
 // import 'package:doctor_app/view/utilis/widgets/stylingWidgets.dart';
 // import 'package:flutter/material.dart';
 //

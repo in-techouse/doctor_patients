@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doctor_app/model/constants.dart';
-import 'package:doctor_app/model/users.dart';
+import 'package:doctor_app/director/Constants.dart';
+import 'package:doctor_app/model/HelloDocUser.dart';
+import 'package:doctor_app/screens/auth/LoginScreen.dart';
 import 'package:doctor_app/services/database.dart';
-import 'package:doctor_app/view/auth/Login_Screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class DoctorChat extends StatefulWidget {
   @override
@@ -21,7 +21,7 @@ class _DoctorChatState extends State<DoctorChat> {
   var userRole;
 
   DatabaseReference reference = FirebaseDatabase.instance.reference();
-  List<Userss> Users = new List<Userss>();
+  List<HelloDocUser> Users = new List<HelloDocUser>();
   loadUserInfo() {
     reference
         .child(Constants.USERS)
@@ -36,7 +36,7 @@ class _DoctorChatState extends State<DoctorChat> {
           if (v1 != null) {
             print("Value: ${v1.toString()}");
             try {
-              Userss user = Userss.fromJSON(v1);
+              HelloDocUser user = HelloDocUser.fromJSON(v1);
               print("?User Role is: ${user.role}");
               userRole = user.role;
               Users.add(user);
@@ -47,30 +47,29 @@ class _DoctorChatState extends State<DoctorChat> {
         });
         print('Data Snapshot ${data.value}');
       }
-    }).catchError((var error) {
-    });
+    }).catchError((var error) {});
   }
+
   getUserInfo() {
-    try
-    {
+    try {
       final user = _auth.currentUser;
-      if(user != null)
-      {
+      if (user != null) {
         loggedInUser = user;
         print(loggedInUser.email);
       }
-    }
-    catch(e){
+    } catch (e) {
       print(e);
     }
   }
-  void streams() async{
-    await for(var snapshots in _fireStore.collection('messages').snapshots()){
-      for(var messages in snapshots.docs){
+
+  void streams() async {
+    await for (var snapshots in _fireStore.collection('messages').snapshots()) {
+      for (var messages in snapshots.docs) {
         print(messages);
       }
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -78,6 +77,7 @@ class _DoctorChatState extends State<DoctorChat> {
     getUserInfo();
     loadUserInfo();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +89,8 @@ class _DoctorChatState extends State<DoctorChat> {
               onPressed: () {
                 //Implement logout functionality
                 _auth.signOut();
-                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> LoginScreen()));
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
               }),
         ],
         title: Text('Patient Chat'),
@@ -130,7 +131,8 @@ class _DoctorChatState extends State<DoctorChat> {
                 return Expanded(
                   child: ListView(
                     reverse: true,
-                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
                     children: messageBubbles,
                   ),
                 );
@@ -154,9 +156,9 @@ class _DoctorChatState extends State<DoctorChat> {
                     onPressed: () {
                       //Implement send functionality.
                       _fireStore.collection('messages').add({
-                        'text' : messageData,
-                        'sender' : loggedInUser.email,
-                        'role' : userRole,
+                        'text': messageData,
+                        'sender': loggedInUser.email,
+                        'role': userRole,
                       });
                     },
                     child: Text(
@@ -187,7 +189,7 @@ class MessageBubble extends StatelessWidget {
       padding: EdgeInsets.all(10.0),
       child: Column(
         crossAxisAlignment:
-        isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+            isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: <Widget>[
           Text(
             sender,
@@ -199,14 +201,14 @@ class MessageBubble extends StatelessWidget {
           Material(
             borderRadius: isMe
                 ? BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                bottomLeft: Radius.circular(30.0),
-                bottomRight: Radius.circular(30.0))
+                    topLeft: Radius.circular(30.0),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0))
                 : BorderRadius.only(
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
-              topRight: Radius.circular(30.0),
-            ),
+                    bottomLeft: Radius.circular(30.0),
+                    bottomRight: Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  ),
             elevation: 5.0,
             color: isMe ? Colors.lightBlueAccent : Colors.white,
             child: Padding(

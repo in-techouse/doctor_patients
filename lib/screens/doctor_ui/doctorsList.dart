@@ -1,9 +1,7 @@
-import 'package:doctor_app/model/constants.dart';
-import 'package:doctor_app/model/users.dart';
-import 'package:doctor_app/model/users.dart';
-import 'package:doctor_app/model/users.dart';
+import 'package:doctor_app/director/Constants.dart';
+import 'package:doctor_app/model/HelloDocUser.dart';
 import 'package:doctor_app/services/database.dart';
-import 'package:doctor_app/view/utilis/colors.dart';
+import 'package:doctor_app/utilis/HelloDocColors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -18,18 +16,18 @@ class _DoctorListState extends State<DoctorList> {
   DatabaseMethods dbModels;
   FirebaseAuth _auth = FirebaseAuth.instance;
   User loggedInUser;
-  List<Userss> doctorNames = List<Userss>();
+  List<HelloDocUser> doctorNames = List<HelloDocUser>();
 
-  Future<Userss> getCurrentUser() async {
+  Future<HelloDocUser> getCurrentUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return Userss.getUserObject(prefs);
+    return HelloDocUser.getUserObject(prefs);
   }
 
   var userRole;
   var doctorName;
 
   DatabaseReference reference = FirebaseDatabase.instance.reference();
-  List<Userss> doctors = new List<Userss>();
+  List<HelloDocUser> doctors = new List<HelloDocUser>();
 
   loadUserInfo() {
     reference
@@ -40,14 +38,14 @@ class _DoctorListState extends State<DoctorList> {
         .then((data) {
       print('Data ${data.toString()}');
       Map<dynamic, dynamic> list = data.value;
-      List<Userss> temp = new List<Userss>();
+      List<HelloDocUser> temp = new List<HelloDocUser>();
       if (list != null) {
         list.forEach((value, v1) {
           print("Value: ${value.toString()}");
           if (v1 != null) {
             print("Value: ${v1.toString()}");
             try {
-              Userss user = Userss.fromJSON(v1);
+              HelloDocUser user = HelloDocUser.fromJSON(v1);
               print("?User Role is: ${user.role}");
               temp.add(user);
             } catch (e) {
@@ -124,7 +122,7 @@ class _DoctorListState extends State<DoctorList> {
                     final doctor = doctors[index];
 
                     return ListTile(
-                      title: Text(doctor.username),
+                      title: Text(doctor.name),
                       subtitle: Text(doctor.email),
                     );
                   },

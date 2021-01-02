@@ -2,9 +2,12 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-class Constants{
+class Constants {
+  // Table Names
   static const String USERS = "Users";
-  static const String NAME = "Name";
+
+  // Column Names
+  static const String NAME = "name";
   static const String EMAIL = "email";
   static const String ID = "id";
   static const String ROLE = "role";
@@ -13,6 +16,14 @@ class Constants{
   static const String CHATS = "chats";
   static const String SENDER = "sender";
   static String myName = "";
+
+  // Error Messages
+  // ignore: non_constant_identifier_names
+  static final String NO_INTERNET =
+      "No internet connection found. Connect to a network and try again.";
+  // ignore: non_constant_identifier_names
+  static final String SMW_ERROR =
+      "Something went wrong. Please try again later";
 }
 
 const kSendButtonTextStyle = TextStyle(

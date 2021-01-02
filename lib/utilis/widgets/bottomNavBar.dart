@@ -1,13 +1,10 @@
-import 'package:doctor_app/view/patient_ui/Patient_DashBoard.dart';
-import 'package:doctor_app/view/patient_ui/chat/chat.dart';
-import 'package:doctor_app/view/patient_ui/chats.dart';
-import 'package:doctor_app/view/patient_ui/diseases.dart';
+import 'package:doctor_app/screens/patient_ui/PatientDashboard.dart';
+import 'package:doctor_app/screens/patient_ui/diseases.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'patientChat.dart';
-import 'chatScreen.dart';
 
 class NavBar extends StatefulWidget {
   @override
@@ -15,17 +12,18 @@ class NavBar extends StatefulWidget {
 }
 
 class _NavBarState extends State<NavBar> {
-  int selectedIndex  = 0;
+  int selectedIndex = 0;
 
   Widget getPage() {
     if (selectedIndex == 0) {
       return Diseases();
     }
-    if (selectedIndex == 1 ) {
+    if (selectedIndex == 1) {
       return ChatDetail();
     }
     return PatientDashBoard();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,13 +36,12 @@ class _NavBarState extends State<NavBar> {
           selectedItemIconColor: Colors.white,
           selectedItemLabelColor: Colors.black,
         ),
-
-        onSelectTab: (index){
+        onSelectTab: (index) {
           setState(() {
-            selectedIndex  = index;
+            selectedIndex = index;
           });
         },
-        selectedIndex: selectedIndex ,
+        selectedIndex: selectedIndex,
         items: [
           FFNavigationBarItem(
             iconData: Icons.warning_amber_sharp,

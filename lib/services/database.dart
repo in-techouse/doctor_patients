@@ -1,6 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:doctor_app/model/constants.dart';
-import 'package:doctor_app/model/users.dart';
+import 'package:doctor_app/director/Constants.dart';
+import 'package:doctor_app/model/HelloDocUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -20,9 +19,6 @@ class DatabaseMethods {
   //     print(e.toString());
   //   });
   // }
-
-
-
 
   // searchByName(String searchField) {
   //   return FirebaseFirestore.instance
@@ -67,7 +63,7 @@ class DatabaseMethods {
   //       .where('users', arrayContains: itIsMyName)
   //       .snapshots();
   // }
-  List<Userss> Users = new List<Userss>();
+  List<HelloDocUser> Users = new List<HelloDocUser>();
   var userRole;
   FirebaseAuth auth = FirebaseAuth.instance;
   DatabaseReference reference = FirebaseDatabase.instance.reference();
@@ -86,7 +82,7 @@ class DatabaseMethods {
           if (v1 != null) {
             print("Value: ${v1.toString()}");
             try {
-              Userss user = Userss.fromJSON(v1);
+              HelloDocUser user = HelloDocUser.fromJSON(v1);
               print("?User Role is: ${user.role}");
               userRole = user.role;
               Users.add(user);
@@ -99,5 +95,4 @@ class DatabaseMethods {
       }
     }).catchError((var error) {});
   }
-
 }

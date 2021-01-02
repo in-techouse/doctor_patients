@@ -1,13 +1,21 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../colors.dart';
+import 'package:flutter/material.dart';
+
+import '../HelloDocColors.dart';
 
 class chat_widget extends StatelessWidget {
-  String image,txt1,txt2,txt3;
+  String image, txt1, txt2, txt3;
   Function onInkWellTap;
   IconData icon1;
   double padding;
-  chat_widget({this.image,this.icon1,this.txt1,this.txt2,this.txt3,this.padding,this.onInkWellTap});
+  chat_widget(
+      {this.image,
+      this.icon1,
+      this.txt1,
+      this.txt2,
+      this.txt3,
+      this.padding,
+      this.onInkWellTap});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +26,7 @@ class chat_widget extends StatelessWidget {
     bool screen = orien == Orientation.portrait ? true : false;
 
     return Padding(
-      padding:  EdgeInsets.only(bottom: padding),
+      padding: EdgeInsets.only(bottom: padding),
       child: InkWell(
         onTap: onInkWellTap,
         child: Padding(
@@ -32,23 +40,29 @@ class chat_widget extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 22,
-                        backgroundImage: AssetImage(image,),
+                        backgroundImage: AssetImage(
+                          image,
+                        ),
                         backgroundColor: Colors.white,
-
                       ),
-                      SizedBox(width: 10,),
+                      SizedBox(
+                        width: 10,
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(txt1,style: TextStyle(fontSize: 20,color: main_color),),
-                          Text(txt2,style: TextStyle(fontSize: 12,color: Colors.blueGrey)),
+                          Text(
+                            txt1,
+                            style: TextStyle(fontSize: 20, color: main_color),
+                          ),
+                          Text(txt2,
+                              style: TextStyle(
+                                  fontSize: 12, color: Colors.blueGrey)),
                         ],
                       ),
-
                     ],
                   ),
-
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -57,7 +71,8 @@ class chat_widget extends StatelessWidget {
                       SizedBox(
                         height: 8,
                       ),
-                      Text(txt3,style: TextStyle(fontSize: 11,color: Colors.white)),
+                      Text(txt3,
+                          style: TextStyle(fontSize: 11, color: Colors.white)),
                       SizedBox(
                         height: 3,
                       ),
@@ -80,6 +95,7 @@ class chat_widget extends StatelessWidget {
     );
   }
 }
+
 Widget myPopMenu() {
   return PopupMenuButton(
       shape: RoundedRectangleBorder(
@@ -88,12 +104,14 @@ Widget myPopMenu() {
       color: Colors.white,
       onSelected: (value) {
         print("hello");
-
       },
       itemBuilder: (context) => [
-        PopupMenuItem(
-            value: 1,
-            child: Center(child: Text('Delete',style: TextStyle(color: main_color),))),
-
-      ]);
+            PopupMenuItem(
+                value: 1,
+                child: Center(
+                    child: Text(
+                  'Delete',
+                  style: TextStyle(color: main_color),
+                ))),
+          ]);
 }
