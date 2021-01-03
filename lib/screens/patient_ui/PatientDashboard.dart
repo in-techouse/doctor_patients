@@ -1,3 +1,5 @@
+import 'package:doctor_app/screens/patient_ui/tabs/DiseasesListTab.dart';
+import 'package:doctor_app/screens/tabs/ProfileTab.dart';
 import 'package:flutter/material.dart';
 
 class PatientDashBoard extends StatefulWidget {
@@ -15,18 +17,19 @@ class _PatientDashBoardState extends State<PatientDashBoard> {
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.directions_transit)),
-              Tab(icon: Icon(Icons.directions_bike)),
+              Tab(icon: Icon(Icons.message)),
+              Tab(icon: Icon(Icons.person)),
             ],
           ),
           title: Text('USER DASHBOARD'),
+          centerTitle: true,
+          elevation: 11.0,
         ),
-        // bottomNavigationBar: NavBar(),
         body: TabBarView(
           children: [
-            Icon(Icons.directions_car),
+            DiseasesListTab(),
             Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
+            ProfileTab(),
           ],
         ),
       ),

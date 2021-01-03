@@ -127,7 +127,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if (!EmailValidator.validate(value)) {
                                         return "Email is invalid";
                                       }
-                                      valueEmail = value;
+                                      valueEmail = value.trim();
                                       return null;
                                     },
                                     decoration: new InputDecoration(
@@ -148,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if (value.length < 6) {
                                         return 'Please enter valid password';
                                       }
-                                      valuePassword = value;
+                                      valuePassword = value.trim();
                                       return null;
                                     },
                                     decoration: new InputDecoration(

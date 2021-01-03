@@ -111,7 +111,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                       if (!EmailValidator.validate(value)) {
                                         return "Email is invalid";
                                       }
-                                      valueEmail = value;
+                                      valueEmail = value.trim();
                                       return null;
                                     },
                                     decoration: new InputDecoration(

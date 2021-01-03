@@ -155,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         if (value.length < 3) {
                                           return "Name is invalid";
                                         }
-                                        user.name = value;
+                                        user.name = value.trim();
                                         return null;
                                       },
                                       decoration: new InputDecoration(
@@ -177,7 +177,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         if (value.length != 11) {
                                           return "Phone Number is invalid";
                                         }
-                                        user.phone = value;
+                                        user.phone = value.trim();
                                         return null;
                                       },
                                       decoration: new InputDecoration(
@@ -199,7 +199,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         if (!EmailValidator.validate(value)) {
                                           return "Email is invalid";
                                         }
-                                        user.email = value;
+                                        user.email = value.trim();
                                         return null;
                                       },
                                       decoration: new InputDecoration(
@@ -222,7 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         if (value.length < 6) {
                                           return 'Please enter valid password';
                                         }
-                                        valuePassword = value;
+                                        valuePassword = value.trim();
                                         return null;
                                       },
                                       decoration: new InputDecoration(
@@ -242,7 +242,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         if (value.length < 6) {
                                           return 'Please enter valid password';
                                         }
-                                        valuePasswordConfirmation = value;
+                                        valuePasswordConfirmation =
+                                            value.trim();
                                         if (valuePassword !=
                                             valuePasswordConfirmation) {
                                           return "Password does not match";

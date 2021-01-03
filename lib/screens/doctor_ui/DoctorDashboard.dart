@@ -1,3 +1,4 @@
+import 'package:doctor_app/screens/tabs/ProfileTab.dart';
 import 'package:flutter/material.dart';
 
 class DoctorDashboard extends StatefulWidget {
@@ -16,17 +17,18 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
             tabs: [
               Tab(icon: Icon(Icons.directions_car)),
               Tab(icon: Icon(Icons.directions_transit)),
-              Tab(icon: Icon(Icons.directions_bike)),
+              Tab(icon: Icon(Icons.person)),
             ],
           ),
           title: Text('DOCTOR DASHBOARD'),
+          centerTitle: true,
+          elevation: 11.0,
         ),
-        // bottomNavigationBar: NavBar(),
         body: TabBarView(
           children: [
             Icon(Icons.directions_car),
             Icon(Icons.directions_transit),
-            Icon(Icons.directions_bike),
+            ProfileTab(),
           ],
         ),
       ),

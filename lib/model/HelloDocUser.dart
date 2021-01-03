@@ -48,6 +48,11 @@ class HelloDocUser {
     prefs.setString(Constants.EMAIL, user.email);
     prefs.setString(Constants.ID, user.id);
   }
+
+  static void deleteSession() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
 }
 
 class Doctors {
