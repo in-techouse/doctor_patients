@@ -25,6 +25,23 @@ class Director {
       ..show();
   }
 
+  static void showErrorWithClose(context, String message) {
+    AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        headerAnimationLoop: true,
+        animType: AnimType.BOTTOMSLIDE,
+        title: 'ERROR!',
+        desc: message,
+        btnCancelOnPress: () {
+          Navigator.pop(context);
+        },
+        btnOkOnPress: () {
+          Navigator.pop(context);
+        })
+      ..show();
+  }
+
   static void popUntilRoot(context) {
     if (Navigator.of(context).canPop()) {
       Navigator.pop(context);

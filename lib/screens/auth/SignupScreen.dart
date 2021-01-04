@@ -2,7 +2,7 @@ import 'package:argon_buttons_flutter/argon_buttons_flutter.dart';
 import 'package:doctor_app/director/Constants.dart';
 import 'package:doctor_app/director/Director.dart';
 import 'package:doctor_app/model/HelloDocUser.dart';
-import 'package:doctor_app/screens/doctor_ui/doctorChat.dart';
+import 'package:doctor_app/screens/doctor_ui/DoctorDashboard.dart';
 import 'package:doctor_app/screens/patient_ui/PatientDashboard.dart';
 import 'package:doctor_app/utilis/HelloDocColors.dart';
 import 'package:email_validator/email_validator.dart';
@@ -61,8 +61,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               prefs.setString(Constants.PHONE, user.phone);
               stopLoading();
               if (user.role == 0)
-                Navigator.pushReplacement(context,
-                    new MaterialPageRoute(builder: (context) => DoctorChat()));
+                Navigator.pushReplacement(
+                    context,
+                    new MaterialPageRoute(
+                        builder: (context) => DoctorDashboard()));
               else
                 Navigator.pushReplacement(
                     context,

@@ -1,4 +1,5 @@
 import 'package:doctor_app/screens/patient_ui/tabs/DiseasesListTab.dart';
+import 'package:doctor_app/screens/tabs/ChatsTab.dart';
 import 'package:doctor_app/screens/tabs/ProfileTab.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +29,7 @@ class _PatientDashBoardState extends State<PatientDashBoard> {
         body: TabBarView(
           children: [
             DiseasesListTab(),
-            Icon(Icons.directions_transit),
+            ChatsTab(),
             ProfileTab(),
           ],
         ),

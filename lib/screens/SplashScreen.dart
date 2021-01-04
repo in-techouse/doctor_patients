@@ -28,6 +28,9 @@ class _HelloDocSplashScreenState extends State<HelloDocSplashScreen> {
     return FutureBuilder<HelloDocUser>(
       future: getCurrentUser(),
       builder: (BuildContext context, AsyncSnapshot<HelloDocUser> u) {
+        // return ChatScreen(
+        //   userId: "FTSRPbPqjrT78FTUnIHudlR9XSB3",
+        // );
         if (u != null && u.data != null) {
           if (u.data.role == 0) {
             return DoctorDashboard();
