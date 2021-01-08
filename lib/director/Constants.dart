@@ -3,6 +3,7 @@ class Constants {
   static const String USERS = "Users";
   static const String TABLE_CHATS = "Chats";
   static const String TABLE_MESSAGES = "Messages";
+  static const String TABLE_BLOOD_DONATIONS = "BloodDonations";
 
   // Column Names
   static const String NAME = "name";

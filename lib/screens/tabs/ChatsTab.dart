@@ -1,10 +1,12 @@
 import 'package:doctor_app/director/Constants.dart';
-import 'package:doctor_app/director/Director.dart';
+import 'package:doctor_app/model/HelloDocChat.dart';
 import 'package:doctor_app/model/HelloDocUser.dart';
+import 'package:doctor_app/screens/ChatScreen.dart';
 import 'package:doctor_app/utilis/HelloDocColors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatsTab extends StatefulWidget {
   @override
@@ -13,9 +15,10 @@ class ChatsTab extends StatefulWidget {
 
 class _ChatsTabState extends State<ChatsTab> {
   DatabaseReference reference =
-      FirebaseDatabase.instance.reference().child(Constants.USERS);
-  List<HelloDocUser> doctors = new List<HelloDocUser>();
+      FirebaseDatabase.instance.reference().child(Constants.TABLE_CHATS);
+  List<HelloDocChat> chats = List<HelloDocChat>.empty(growable: true);
   bool isLoading = true;
+  HelloDocUser currentUser;
 
   @override
   void initState() {
@@ -23,36 +26,52 @@ class _ChatsTabState extends State<ChatsTab> {
     loadAllChats();
   }
 
-  void loadAllChats() {
-    reference.orderByChild(Constants.ROLE).equalTo(0).once().then((data) {
-      print('Data ${data.toString()}');
-      Map<dynamic, dynamic> list = data.value;
-      List<HelloDocUser> temp = new List<HelloDocUser>();
-      if (list != null) {
-        list.forEach((value, v1) {
+  void loadAllChats() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    currentUser = HelloDocUser.getUserObject(prefs);
+
+    String orderBy =
+        currentUser.role == 0 ? Constants.DOCTOR_ID : Constants.PATIENT_ID;
+
+    print("Order by $orderBy");
+    reference
+        .orderByChild(orderBy)
+        .equalTo(currentUser.id)
+        .onValue
+        .listen((event) {
+      print("Event: ${event.toString()}");
+      print("Event Snapshot: ${event.snapshot.toString()}");
+      print("Event Snapshot Value: ${event.snapshot.value.toString()}");
+      setState(() {
+        isLoading = true;
+        chats = List<HelloDocChat>.empty(growable: true);
+      });
+      if (event != null &&
+          event.snapshot != null &&
+          event.snapshot.value != null) {
+        Map<dynamic, dynamic> list = event.snapshot.value;
+        List<HelloDocChat> temp = new List<HelloDocChat>.empty(growable: true);
+        list.forEach((key, value) {
           print("Value: ${value.toString()}");
-          if (v1 != null) {
-            print("Value: ${v1.toString()}");
-            try {
-              HelloDocUser user = HelloDocUser.fromJSON(v1);
-              print("?User Role is: ${user.role}");
-              temp.add(user);
-            } catch (e) {
-              print('Exception: ${e.toString()}');
-            }
+          HelloDocChat chat = HelloDocChat.fromJSON(value);
+          if (chat != null) {
+            temp.add(chat);
           }
         });
-        print('Data Snapshot ${data.value}');
+        temp.sort((a, b) {
+          var aDate = a.timeStamps;
+          var bDate = b.timeStamps;
+          return bDate.compareTo(aDate);
+        });
+        setState(() {
+          isLoading = false;
+          chats = temp;
+        });
+      } else {
+        setState(() {
+          isLoading = false;
+        });
       }
-      setState(() {
-        doctors = temp;
-        isLoading = false;
-      });
-    }).catchError((var error) {
-      setState(() {
-        isLoading = false;
-      });
-      Director.showError(context, Constants.SMW_ERROR);
     });
   }
 
@@ -66,26 +85,38 @@ class _ChatsTabState extends State<ChatsTab> {
 
   Widget showAllChats() {
     return ListView.builder(
-      itemCount: doctors.length,
+      itemCount: chats.length,
       itemBuilder: (context, index) {
-        final doctor = doctors[index];
+        HelloDocChat chat = chats[index];
+        DateTime chatTime =
+            DateTime.fromMillisecondsSinceEpoch(chat.timeStamps);
         return Padding(
           padding: const EdgeInsets.all(17.0),
           child: GestureDetector(
             onTap: () {
-              print("Start Chat with Doctor: ${doctor.name}");
+              print("Start Chat with Doctor: ${chat.chatId}");
+              String uId =
+                  currentUser.role == 0 ? chat.patientId : chat.doctorId;
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ChatScreen(
+                            userId: uId,
+                          )));
             },
             child: Card(
               elevation: 11,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(13.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      doctor.name,
+                      currentUser.role == 0
+                          ? chat.patientName
+                          : chat.doctorName,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: HelloDocColors.colorPrimary,
@@ -96,10 +127,19 @@ class _ChatsTabState extends State<ChatsTab> {
                       height: 7,
                     ),
                     Text(
-                      doctor.email,
+                      chat.lastMessage,
                       textAlign: TextAlign.start,
                       style: TextStyle(
                           color: HelloDocColors.colorPrimary, fontSize: 17),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Text(
+                          "${chatTime.day}/${chatTime.month}/${chatTime.year} ${chatTime.hour}:${chatTime.minute}",
+                          style: TextStyle(fontSize: 11),
+                        ),
+                      ],
                     )
                   ],
                 ),
@@ -113,8 +153,6 @@ class _ChatsTabState extends State<ChatsTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: showLoadingBar(),
-    );
+    return isLoading == true ? showLoadingBar() : showAllChats();
   }
 }
