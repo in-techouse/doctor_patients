@@ -18,6 +18,14 @@ class Constants {
   static const String CHAT_ID = "chatId";
   static const String LAST_MESSAGE = "lastMessage";
   static const String TIME_STAMPS = "timeStamps";
+  static const String OWNER_ID = "ownerId";
+  static const String BLOOD_GROUP = "bloodGroup";
+  static const String CITY = "city";
+
+  // Success Messages
+  // ignore: non_constant_identifier_names
+  static final String BLOOD_DONATION_POSTED =
+      "You blood donation post, has been posted successfully.";
 
   // Error Messages
   // ignore: non_constant_identifier_names

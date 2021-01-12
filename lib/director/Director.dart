@@ -42,6 +42,23 @@ class Director {
       ..show();
   }
 
+  static void showSuccessWithClose(context, String message) {
+    AwesomeDialog(
+        context: context,
+        dialogType: DialogType.SUCCES,
+        headerAnimationLoop: true,
+        animType: AnimType.BOTTOMSLIDE,
+        title: 'BLOOD DONATION!',
+        desc: message,
+        btnCancelOnPress: () {
+          Navigator.pop(context);
+        },
+        btnOkOnPress: () {
+          Navigator.pop(context);
+        })
+      ..show();
+  }
+
   static void popUntilRoot(context) {
     if (Navigator.of(context).canPop()) {
       Navigator.pop(context);

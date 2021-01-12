@@ -28,8 +28,8 @@ class _HelloDocSplashScreenState extends State<HelloDocSplashScreen> {
     return FutureBuilder<HelloDocUser>(
       future: getCurrentUser(),
       builder: (BuildContext context, AsyncSnapshot<HelloDocUser> u) {
-        print("SplashScreen, User role is ${u.data.role}");
         if (u != null && u.data != null) {
+          print("SplashScreen, User role is ${u.data.role}");
           if (u.data.role == 0) {
             return DoctorDashboard();
           } else {
