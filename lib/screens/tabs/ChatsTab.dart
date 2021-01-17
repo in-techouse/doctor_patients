@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:doctor_app/director/Constants.dart';
 import 'package:doctor_app/model/HelloDocChat.dart';
 import 'package:doctor_app/model/HelloDocUser.dart';
@@ -87,16 +88,27 @@ class _ChatsTabState extends State<ChatsTab> {
   void showDeleteConfirmation(HelloDocChat chat) {
     AwesomeDialog(
         context: context,
-        dialogType: DialogType.ERROR,
+        dialogType: DialogType.WARNING,
         headerAnimationLoop: true,
         animType: AnimType.BOTTOMSLIDE,
         title: 'ARE YOU SURE!',
         desc: "Are you sure to delete this chat?",
-        btnCancelOnPress: () {
-          // Navigator.pop(context);
-        },
+        btnCancelOnPress: () {},
         btnOkOnPress: () {
-          // Navigator.pop(context);
+          setState(() {
+            isLoading = true;
+          });
+          var chatCollectionRef =
+              FirebaseFirestore.instance.collection(chat.chatId);
+          chatCollectionRef.snapshots().forEach((element) {
+            for (QueryDocumentSnapshot snap in element.docs) {
+              snap.reference.delete();
+            }
+          });
+          reference.child(chat.chatId).remove();
+          setState(() {
+            isLoading = false;
+          });
         })
       ..show();
   }
