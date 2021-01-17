@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:doctor_app/director/Constants.dart';
 import 'package:doctor_app/model/HelloDocChat.dart';
 import 'package:doctor_app/model/HelloDocUser.dart';
@@ -83,6 +84,23 @@ class _ChatsTabState extends State<ChatsTab> {
     );
   }
 
+  void showDeleteConfirmation(HelloDocChat chat) {
+    AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        headerAnimationLoop: true,
+        animType: AnimType.BOTTOMSLIDE,
+        title: 'ARE YOU SURE!',
+        desc: "Are you sure to delete this chat?",
+        btnCancelOnPress: () {
+          // Navigator.pop(context);
+        },
+        btnOkOnPress: () {
+          // Navigator.pop(context);
+        })
+      ..show();
+  }
+
   Widget showAllChats() {
     return ListView.builder(
       itemCount: chats.length,
@@ -93,6 +111,9 @@ class _ChatsTabState extends State<ChatsTab> {
         return Padding(
           padding: const EdgeInsets.all(17.0),
           child: GestureDetector(
+            onLongPress: () {
+              showDeleteConfirmation(chats[index]);
+            },
             onTap: () {
               print("Start Chat with Doctor: ${chat.chatId}");
               String uId =

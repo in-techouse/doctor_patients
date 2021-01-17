@@ -3,7 +3,7 @@ import 'package:doctor_app/screens/tabs/ChatsTab.dart';
 import 'package:doctor_app/screens/tabs/ProfileTab.dart';
 import 'package:flutter/material.dart';
 
-import 'tabs/BoolDonationsTab.dart';
+import '../tabs/BoolDonationsTab.dart';
 
 class PatientDashBoard extends StatefulWidget {
   @override

@@ -1,3 +1,4 @@
+import 'package:doctor_app/screens/tabs/BoolDonationsTab.dart';
 import 'package:doctor_app/screens/tabs/ChatsTab.dart';
 import 'package:doctor_app/screens/tabs/ProfileTab.dart';
 import 'package:flutter/material.dart';
@@ -11,12 +12,13 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.message)),
+              Tab(icon: new Image.asset("assets/images/blood.png")),
               Tab(icon: Icon(Icons.person)),
             ],
           ),
@@ -27,6 +29,7 @@ class _DoctorDashboardState extends State<DoctorDashboard> {
         body: TabBarView(
           children: [
             ChatsTab(),
+            BloodDonationsTab(),
             ProfileTab(),
           ],
         ),

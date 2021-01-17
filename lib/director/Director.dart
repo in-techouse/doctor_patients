@@ -65,4 +65,15 @@ class Director {
       popUntilRoot(context);
     }
   }
+
+  static String getChatId(uid1, uid2) {
+    String sum = "";
+    for (var i = 0; i < 10; i++) {
+      var char1 = uid1.codeUnitAt(i);
+      var char2 = uid2.codeUnitAt(i);
+      sum = sum + (char1 + char2).toString();
+    }
+    print("Chat id is $sum");
+    return sum;
+  }
 }

@@ -55,13 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
       if (value != null && value.value != null) {
         otherUser = HelloDocUser.fromJSON(value.value);
         secondUser = ChatUser(name: otherUser.name, uid: otherUser.id);
-        var sum = "";
-        for (var i = 0; i < 10; i++) {
-          var char1 = currentUser.id.codeUnitAt(i);
-          var char2 = otherUser.id.codeUnitAt(i);
-          sum = sum + (char1 + char2).toString();
-        }
-        print("Chat id is $sum");
+        var sum = Director.getChatId(currentUser.id, otherUser.id);
         setState(() {
           chatId = sum;
         });
@@ -120,8 +114,7 @@ class _ChatScreenState extends State<ChatScreen> {
     print("Message is: ${message.toJson()}");
     var documentReference = FirebaseFirestore.instance
         .collection(this.chatId)
-        .document(DateTime.now().millisecondsSinceEpoch.toString());
-
+        .doc(DateTime.now().millisecondsSinceEpoch.toString());
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       transaction.set(
         documentReference,
@@ -154,9 +147,10 @@ class _ChatScreenState extends State<ChatScreen> {
         stream: FirebaseFirestore.instance.collection(this.chatId).snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<DocumentSnapshot> items = snapshot.data.documents;
-            var messages =
-                items.map((i) => ChatMessage.fromJson(i.data())).toList();
+            QuerySnapshot querySnapshot = snapshot.data;
+            var messages = querySnapshot.docs
+                .map((i) => ChatMessage.fromJson(i.data()))
+                .toList();
             return DashChat(
               key: _chatViewKey,
               inverted: false,

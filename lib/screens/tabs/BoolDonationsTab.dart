@@ -1,6 +1,6 @@
 import 'package:doctor_app/director/Constants.dart';
 import 'package:doctor_app/model/HelloDocBloodDonation.dart';
-import 'package:doctor_app/screens/patient_ui/NewBloodDonation.dart';
+import 'package:doctor_app/screens/NewBloodDonation.dart';
 import 'package:doctor_app/utilis/HelloDocColors.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
